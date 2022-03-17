@@ -1,0 +1,60 @@
+{
+  "name": "loopback4-mailer",
+  "description": "Mailer component for Loopback 4",
+  "version": "0.1.0",
+  "keywords": [
+    "loopback-4",
+    "loopback-extension",
+    "loopback-next",
+    "mailer",
+    "nodemailer",
+    "smtp",
+    "ses"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "David Sanchez <emulienfou@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emulienfou/loopback4-mailer.git"
+  },
+  "engines": {
+    "node": "12 || 14 || 16 || 17"
+  },
+  "scripts": {
+    "build": "lb-tsc",
+    "clean": "lb-clean loopback4-mailer*.tgz dist *.tsbuildinfo package",
+    "pretest": "npm run build",
+    "test": "lb-mocha \"dist/__tests__/**/*.js\"",
+    "verify": "npm pack && tar xf loopback4-mailer*.tgz && tree package && npm run clean"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "README.md",
+    "dist",
+    "src",
+    "!*/__tests__"
+  ],
+  "peerDependencies": {
+    "@loopback/core": "*",
+    "@loopback/rest": "*"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ses": "^3.54.1",
+    "@loopback/rest": "*",
+    "@types/debug": "^4.1.7",
+    "debug": "^4.3.3",
+    "nodemailer": "^6.7.2",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@loopback/build": "^8.1.1",
+    "@loopback/core": "^3.1.1",
+    "@types/node": "^17.0.21",
+    "@types/nodemailer": "^6.4.4",
+    "typescript": "^4.6.2"
+  }
+}
