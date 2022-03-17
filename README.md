@@ -18,7 +18,7 @@ npm install --save loopback4-mailer
 
 ## Basic use
 
-### Usage
+### Configuration
 
 In order to use this component into your LoopBack application, please follow below steps.
 
@@ -39,7 +39,7 @@ export class MyApplication extends Application {
 After the above, you need to configure one of the nodemailer transports.   
 Based upon the requirement, please choose and configure the respective transport mailer. See below.
 
-### SMTP transport
+#### SMTP transport
 
 To use the default SMTP transport from nodemailer, you will need to configure the next binding:
 
@@ -57,7 +57,7 @@ this.configure(NodemailerBindings.Config).to( {
 });
 ```
 
-### SES transport
+#### SES transport
 
 To use the built-in Amazon SES transport from nodemailer, you need to configure the next binding:
 
@@ -71,6 +71,31 @@ this.configure(SESBindings.Config).to({
   },
   region: process.env.SES_REGION,
 });
+```
+
+### Usage
+
+Once the configuration is set, the implementation of the mailer is very easy. Just import the `MailerService` and use
+the `sendMail` function to send and email, as demonstrate bellow:
+
+```ts
+import {service} from '@loopback/core';
+import {MailerService} from 'loopback4-mailer';
+import {get} from '@loopback/rest';
+
+export class MailerController {
+  constructor(@service(MailerService) protected mailerService: MailerService) {
+  }
+
+  @get('/email/send')
+  async send() {
+    return this.mailerService.sendMail({
+      from: 'example@example.com',
+      to: 'example@example.com',
+      text: 'example'
+    })
+  }
+}
 ```
 
 ## Debug
