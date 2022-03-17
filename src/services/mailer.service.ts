@@ -2,7 +2,8 @@ import {BindingScope, config, injectable} from '@loopback/core';
 import {HttpErrors} from '@loopback/rest';
 import {Mailer} from '../types';
 import * as nodemailer from 'nodemailer';
-import * as SMTPTransport from 'nodemailer/lib/smtp-transport';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import SESTransport from 'nodemailer/lib/ses-transport';
 import {SESClient, SESClientConfig, SendRawEmailCommand} from '@aws-sdk/client-ses';
 import {NodemailerBindings, SESBindings} from '../keys';
 import {debug} from '../components';
@@ -34,7 +35,7 @@ export class MailerService implements Mailer {
     }
   }
 
-  async sendMail(mailOptions: nodemailer.SendMailOptions): Promise<any> {
+  async sendMail(mailOptions: nodemailer.SendMailOptions): Promise<SMTPTransport.SentMessageInfo | SESTransport.SentMessageInfo> {
     debug('Sending mail');
     const response = await this.transporter.sendMail(mailOptions);
     debug(response);
